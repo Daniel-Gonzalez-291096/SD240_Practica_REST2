@@ -68,29 +68,6 @@ def borrar_fotos_por_id_alumno(sesion: Session, id_alumno: int):
         sesion.delete(foto)
     sesion.commit()
 
-#-----------------------------funciones DELETE en especifico-----------------------------------------#
 
-
-#-----DELETE FROM app.calificaciones WHERE id = {id_calificacion}-----
-# elimina una calificacion por su ID especifico
-def borrar_calificacion_por_id(sesion: Session, id_calificacion: int):
-    print("DELETE FROM app.calificaciones WHERE id =", id_calificacion)
-    calificacion = calificacion_por_id(sesion, id_calificacion)
-    if calificacion is not None:
-        sesion.delete(calificacion)
-        sesion.commit()
-        return {"mensaje": f"calificacion con id {id_calificacion} eliminada"}
-    return {"error": f"no se encontro la calificacion con id {id_calificacion}."}
-
-#-----DELETE FROM app.fotos WHERE id = :id_foto-----
-# elimina una foto por su ID especifico
-def borrar_foto_por_id(sesion: Session, id_foto: int):
-    print("DELETE FROM app.fotos WHERE id =", id_foto)
-    foto = foto_por_id(sesion, id_foto)
-    if foto is not None:
-        sesion.delete(foto)
-        sesion.commit()
-        return {"mensaje": f"foto con id {id_foto} eliminada"}
-    return {"error": f"no se encontro la foto con id {id_foto}."}
 
 
