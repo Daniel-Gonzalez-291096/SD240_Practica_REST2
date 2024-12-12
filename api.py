@@ -2,6 +2,7 @@ from fastapi import FastAPI, UploadFile, File, Form, Depends
 from sqlalchemy.orm import Session
 import orm.repo as repo #funciones para hacer consultas a la BD
 from orm.config import generador_sesion  #generador de sesiones
+import orm.esquemas as esquemas
 
 
 # creacion del servidor
@@ -84,3 +85,40 @@ def eliminar_alumno(id: int, sesion: Session = Depends(generador_sesion)):
     repo.borrar_calificaciones_por_id_alumno(sesion, id)
     repo.borrar_alumno_por_id(sesion, id)
     return {"mensaje": f"alumno con id {id} eliminado"}
+
+#---------------------------------------Practica REST 2----------------------------------------------------#
+#------------------------------Peticiones del tipo PUT y POST----------------------------------------------#
+
+#post("/alumnos”)
+@app.post("/alumnos")
+def crear_alumno(alumno: esquemas.AlumnoBase, sesion: Session = Depends(generador_sesion)):
+    return repo.crear_alumno(sesion, alumno)
+
+#put("/alumnos/{id})
+@app.put("/alumnos/{id}")
+def actualizar_alumno(id: int, alumno: esquemas.AlumnoBase, sesion: Session = Depends(generador_sesion)):
+    return repo.actualizar_alumno(sesion, id, alumno)
+
+
+#post("/alumnos/{id}/calificaciones")
+@app.post("/alumnos/{id}/calificaciones")
+def crear_calificacion(id: int, calificacion: esquemas.CalificacionesBase, sesion: Session = Depends(generador_sesion)):
+    return repo.crear_calificacion(sesion, id, calificacion)
+
+
+#put("/calificaciones/{id}")
+@app.put("/calificaciones/{id}")
+def actualizar_calificacion(id: int, calificacion: esquemas.CalificacionesBase, sesion: Session = Depends(generador_sesion)):
+    return repo.actualizar_calificacion(sesion, id, calificacion)
+
+
+#post("/alumnos/{id}/fotos")
+@app.post("/alumnos/{id}/fotos")
+def crear_foto(id: int, foto: esquemas.FotoBase, sesion: Session = Depends(generador_sesion)):
+    return repo.crear_foto(sesion, id, foto)
+
+
+#put("/fotos/{id}")
+@app.put("/fotos/{id}")
+def actualizar_foto(id: int, foto: esquemas.FotoBase, sesion: Session = Depends(generador_sesion)):
+    return repo.actualizar_foto(sesion, id, foto)
